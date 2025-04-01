@@ -6,10 +6,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy bot files
-COPY bot.py .
-COPY dathost_api.py .
-COPY .env .
+# No need to copy Python files as they'll be mounted
+# The .env file will also be mounted
+
+# Set the working directory to where the code will be mounted
+WORKDIR /app/src
 
 # Run the bot
 CMD ["python", "bot.py"] 

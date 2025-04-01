@@ -6,6 +6,8 @@ services:
     container_name: dathost-discord-bot
     restart: unless-stopped
     volumes:
+      - ./src:/app/src:ro
       - ./.env:/app/.env:ro
     environment:
-      - TZ=Europe/Helsinki  # Adjust timezone as needed 
+      - TZ=Europe/Helsinki  # Adjust timezone as needed
+    working_dir: /app/src

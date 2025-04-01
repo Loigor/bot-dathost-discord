@@ -2,6 +2,21 @@
 
 A Discord bot for managing CS2 game servers on Dathost. The bot allows users to control and monitor game servers directly through Discord commands.
 
+## Project Structure
+
+```
+.
+├── src/
+│   ├── bot.py
+│   └── dathost_api.py
+├── .env
+├── .gitignore
+├── docker-compose.yml
+├── Dockerfile
+├── README.md
+└── requirements.txt
+```
+
 ## Features
 
 - **Server Management**
@@ -40,7 +55,7 @@ A Discord bot for managing CS2 game servers on Dathost. The bot allows users to 
 
 4. Run the bot:
    ```bash
-   python bot.py
+   python src/bot.py
    ```
 
 ## Docker Setup
