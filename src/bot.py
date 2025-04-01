@@ -279,7 +279,7 @@ async def prac(ctx):
         players = f"{server.get('players_current', 0)}/{server.get('players_max', 0)}"
         connect_cmd = f"connect {domain}:{game_port}" if domain != 'N/A' and game_port != 'N/A' else 'N/A'
         status = "🟢 Online" if server.get('on') else "🔴 Offline"
-        password = server.get('game_password', '')
+        password = server.get('cs2_settings', {}).get('password', '')
         connect_string = connect_cmd
         if password:
             connect_string = f"{connect_cmd}; password {password}"
