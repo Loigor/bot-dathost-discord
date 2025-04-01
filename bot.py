@@ -13,8 +13,6 @@ print(f"Looking for .env file in: {os.path.abspath('.env')}")
 # Load environment variables
 load_dotenv(verbose=True)  # Add verbose=True to see more details
 
-prac_server_id = "67dc83cf3e825ed3401c192f"
-
 token = os.getenv('DISCORD_TOKEN')
 print(f"Token being used: {token}")
 
@@ -263,17 +261,14 @@ async def debug_server(ctx):
 @bot.command()
 @check_channel()
 async def prac(ctx):
-    """Deprecated command to start the practice server"""
-    
-    await ctx.send("Noniin focus! Servu on jo päällä!")
-
-    """Get connect info for the Tenet server"""
+    """Get connect info for the prac server"""
     try:
-        # Find server with 'tenet' in the name
-        matches = await find_server_by_partial_name(dathost, 'tenet')
+        # Find server with 'prac' in the name
+        prac_server_name = os.getenv('PRAC_SERVER_NAME', 'prac')  # Default to 'prac' if not set
+        matches = await find_server_by_partial_name(dathost, prac_server_name)
         
         if not matches:
-            await ctx.send("❌ No Tenet server found")
+            await ctx.send("❌ No Prac server found")
             return
             
         server = matches[0]  # Get first match
@@ -284,21 +279,22 @@ async def prac(ctx):
         players = f"{server.get('players_current', 0)}/{server.get('players_max', 0)}"
         connect_cmd = f"connect {domain}:{game_port}" if domain != 'N/A' and game_port != 'N/A' else 'N/A'
         status = "🟢 Online" if server.get('on') else "🔴 Offline"
+        password = server.get('game_password', '')
+        connect_string = connect_cmd
+        if password:
+            connect_string = f"{connect_cmd}; password {password}"
         
         response = (
             f"**{server['name']}**\n"
             f"• Status: {status}\n"
             f"• Players: {players}\n" 
-            f"• Connect: `{connect_cmd}`\n"
+            f"• Connect: `{connect_string}`\n"
             f"• Map: {server.get('map', 'N/A')}\n"
         )
-        
         await ctx.send(response)
         
     except Exception as e:
-        await ctx.send(f"❌ Error getting Tenet server info: {str(e)}")
-            
-
+        await ctx.send(f"❌ Error getting Prac server info: {str(e)}")
 
 # Run the bot
 if __name__ == "__main__":
