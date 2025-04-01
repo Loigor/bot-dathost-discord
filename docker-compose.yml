@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  cs-discord-bot:
+    build: .
+    container_name: dathost-discord-bot
+    restart: unless-stopped
+    volumes:
+      - ./.env:/app/.env:ro
+    environment:
+      - TZ=Europe/Helsinki  # Adjust timezone as needed 
